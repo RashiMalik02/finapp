@@ -9,6 +9,7 @@ import com.finapp.finapp.auth_users.entity.User;
 import com.finapp.finapp.enums.AccountStatus;
 import com.finapp.finapp.enums.AccountType;
 import com.finapp.finapp.enums.Currency;
+import com.finapp.finapp.transactions.dtos.TransactionDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
