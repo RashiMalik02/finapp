@@ -88,6 +88,7 @@ public class AuthServiceImpl implements AuthService {
 //        //autogenerate an account number for the user
 //        Account savedAccount = accountService.save(AccountType.SAVINGS, savedUser);
 
+
         HashMap<String , Object> vars = new HashMap<>();
 
         vars.put("name", savedUser.getFirstName());
@@ -101,7 +102,6 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         notificationService.sendEmail(notificationDTO, savedUser);
-
         //send an account creation/details email
         HashMap<String , Object> accountVars = new HashMap<>();
 
