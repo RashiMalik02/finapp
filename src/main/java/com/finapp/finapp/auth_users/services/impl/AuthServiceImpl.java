@@ -1,6 +1,7 @@
 package com.finapp.finapp.auth_users.services.impl;
 
 import com.finapp.finapp.account.entity.Account;
+import com.finapp.finapp.account.services.AccountService;
 import com.finapp.finapp.auth_users.CodeGenerator;
 import com.finapp.finapp.auth_users.dtos.LoginRequest;
 import com.finapp.finapp.auth_users.dtos.LoginResponse;
@@ -45,6 +46,7 @@ public class AuthServiceImpl implements AuthService {
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
     private final NotificationService notificationService;
+    private final AccountService accountService;
 
     private final CodeGenerator codeGenerator;
     private final PasswordResetCodeRepo passwordResetCodeRepo;
@@ -86,7 +88,7 @@ public class AuthServiceImpl implements AuthService {
         User savedUser = userRepo.save(user);
 
 //        //autogenerate an account number for the user
-//        Account savedAccount = accountService.save(AccountType.SAVINGS, savedUser);
+        Account savedAccount = accountService.createAccount(AccountType.SAVINGS, savedUser);
 
 
         HashMap<String , Object> vars = new HashMap<>();
@@ -106,7 +108,7 @@ public class AuthServiceImpl implements AuthService {
         HashMap<String , Object> accountVars = new HashMap<>();
 
         accountVars.put("name", savedUser.getFirstName());
-//        accountVars.put("accountNumber", savedAccount.getAccountNumber());
+        accountVars.put("accountNumber", savedAccount.getAccountNumber());
         accountVars.put("accountType", AccountType.SAVINGS.name());
         accountVars.put("currency", Currency.USD);
 
@@ -122,7 +124,7 @@ public class AuthServiceImpl implements AuthService {
         return Response.<String>builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Your account has been created successfully")
-//                .data("Email of your account details has been sent to you! Your Account Number is: " + savedAccount.getAccountNumber())
+                .data("Email of your account details has been sent to you! Your Account Number is: " + savedAccount.getAccountNumber())
                 .build();
 
     }
