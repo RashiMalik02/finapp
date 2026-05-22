@@ -24,4 +24,9 @@ public class AccountController {
     public ResponseEntity<Response<?>> closeAccounts(@PathVariable String accountNumber) {
         return ResponseEntity.ok(accountService.closeAccount(accountNumber));
     }
+
+    @GetMapping("/verify")
+    public ResponseEntity<Response<AccountDTO>> verifyAccount(@RequestParam String accountNumber) {
+        return ResponseEntity.ok(accountService.verifyAccount(accountNumber));
+    }
 }

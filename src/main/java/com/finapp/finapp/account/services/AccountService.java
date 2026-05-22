@@ -14,4 +14,6 @@ public interface AccountService {
     Response<List<AccountDTO>> getMyAccounts();
 
     Response<?> closeAccount(String accountNumber);
+
+    Response<AccountDTO> verifyAccount(String accountNumber);
 }

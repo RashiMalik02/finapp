@@ -5,6 +5,7 @@ import com.finapp.finapp.auth_users.dtos.UserDTO;
 import com.finapp.finapp.auth_users.entity.User;
 import com.finapp.finapp.auth_users.repo.UserRepo;
 import com.finapp.finapp.auth_users.services.UserService;
+import com.finapp.finapp.aws.S3Service;
 import com.finapp.finapp.exceptions.BadRequestException;
 import com.finapp.finapp.exceptions.NotFoundException;
 import com.finapp.finapp.notification.dtos.NotificationDTO;
@@ -42,6 +43,8 @@ public class UserServiceImpl implements UserService {
     private final NotificationService notificationService;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+
+    private final S3Service s3Service;
 
     private final String uploadDir = "uploads/profile-pictures/";
 
@@ -158,6 +161,30 @@ public class UserServiceImpl implements UserService {
                     .statusCode(HttpStatus.OK.value())
                     .message("Profile photo added successfullyy!!")
                     .build();
+        } catch(IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Response<?> uploadProfilePictureToS3(MultipartFile file) {
+        log.info("inside s3 function");
+        User user = getCurrentLoggedInUser();
+        try {
+            if(user.getProfilePictureUrl() != null && !user.getProfilePictureUrl().isEmpty()) {
+                s3Service.deleteFile(user.getProfilePictureUrl());
+            }
+
+            String s3Url = s3Service.uploadFile(file, "profile-pictures");
+            log.info("got the url: " + s3Url);
+            user.setProfilePictureUrl(s3Url);
+            userRepo.save(user);
+
+            return Response.builder()
+                    .statusCode(HttpStatus.OK.value())
+                    .message("Profile photo added successfullyy!!")
+                    .build();
+
         } catch(IOException e) {
             throw new RuntimeException(e.getMessage());
         }

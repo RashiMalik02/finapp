@@ -90,6 +90,20 @@ public class AccountServiceImpl implements AccountService{
                 .build();
     }
 
+    @Override
+    public Response<AccountDTO> verifyAccount(String accountNumber) {
+        Account account = accountRepo.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new NotFoundException("Account not found"));
+
+        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
+
+        return Response.<AccountDTO>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Account found")
+                .data(accountDTO)
+                .build();
+    }
+
     private String generateAccountNumber() {
         String accountNumber;
         do {
