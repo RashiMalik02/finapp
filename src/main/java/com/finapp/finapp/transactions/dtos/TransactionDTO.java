@@ -2,10 +2,8 @@ package com.finapp.finapp.transactions.dtos;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.finapp.finapp.account.dtos.AccountDTO;
-import com.finapp.finapp.account.entity.Account;
 import com.finapp.finapp.enums.TransactionStatus;
 import com.finapp.finapp.enums.TransactionType;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

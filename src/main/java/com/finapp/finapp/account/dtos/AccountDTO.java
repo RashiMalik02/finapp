@@ -5,12 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.finapp.finapp.auth_users.dtos.UserDTO;
-import com.finapp.finapp.auth_users.entity.User;
 import com.finapp.finapp.enums.AccountStatus;
 import com.finapp.finapp.enums.AccountType;
 import com.finapp.finapp.enums.Currency;
 import com.finapp.finapp.transactions.dtos.TransactionDTO;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +16,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
