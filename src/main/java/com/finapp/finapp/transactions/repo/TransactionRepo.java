@@ -1,6 +1,5 @@
 package com.finapp.finapp.transactions.repo;
 
-import com.finapp.finapp.account.entity.Account;
 import com.finapp.finapp.transactions.entity.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
